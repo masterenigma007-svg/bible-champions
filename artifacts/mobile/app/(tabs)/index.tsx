@@ -19,7 +19,7 @@ import ScreenBackground from "@/components/ScreenBackground";
 export default function HomeScreen() {
   const c = colors.light;
   const insets = useSafeAreaInsets();
-  const { stats } = useGame();
+  const { stats, profile } = useGame();
   const topPad = Platform.OS === "web" ? 67 : insets.top + 16;
 
   const accuracy =
@@ -42,7 +42,7 @@ export default function HomeScreen() {
       <View style={styles.header}>
         <View>
           <Text style={styles.greeting}>Welcome back,</Text>
-          <Text style={styles.appName}>Bible Champion</Text>
+          <Text style={styles.appName}>{profile.name.trim() || "Bible Champion"}</Text>
         </View>
         <View style={styles.streakBadge}>
           <Feather name="zap" size={14} color={c.primary} />

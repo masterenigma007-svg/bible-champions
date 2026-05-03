@@ -1,5 +1,6 @@
 import { Feather } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
+import * as SMS from "expo-sms";
 import React from "react";
 import {
   Platform,
@@ -12,6 +13,7 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import colors from "@/constants/colors";
 import ScreenBackground from "@/components/ScreenBackground";
+import { useGame } from "@/context/GameContext";
 
 export default function ResultsScreen() {
   const params = useLocalSearchParams<{
@@ -23,6 +25,7 @@ export default function ResultsScreen() {
   }>();
   const insets = useSafeAreaInsets();
   const c = colors.light;
+  const { profile } = useGame();
 
   const score = parseInt(params.score ?? "0", 10);
   const correct = parseInt(params.correct ?? "0", 10);
@@ -30,6 +33,18 @@ export default function ResultsScreen() {
   const accuracy = Math.round((correct / total) * 100);
   const topPad = Platform.OS === "web" ? 67 : insets.top + 20;
   const botPad = Platform.OS === "web" ? 34 : insets.bottom + 20;
+
+  const handleShare = async () => {
+    const isAvailable = await SMS.isAvailableAsync();
+    if (!isAvailable) return;
+    const name = profile.name.trim() || "I";
+    const msg =
+      `${name} just scored ${score.toLocaleString()} pts on Bible Champions! ` +
+      `✝️ ${correct}/${total} correct (${accuracy}% accuracy) ` +
+      `in ${params.category ?? "Bible"} on ${params.difficulty ?? ""} difficulty. ` +
+      `Think you can beat that? Download Bible Champions!`;
+    await SMS.sendSMSAsync([], msg);
+  };
 
   const getGrade = () => {
     if (accuracy === 100) return { label: "Perfect!", color: "#FFD700", icon: "award" };
@@ -111,6 +126,14 @@ export default function ResultsScreen() {
           >
             <Feather name="play" size={16} color={c.primaryForeground} />
             <Text style={styles.primaryBtnText}>Play Again</Text>
+          </Pressable>
+
+          <Pressable
+            style={({ pressed }) => [styles.shareBtn, pressed && { opacity: 0.85 }]}
+            onPress={handleShare}
+          >
+            <Feather name="message-circle" size={16} color={c.primaryForeground} />
+            <Text style={styles.shareBtnText}>Share via Text</Text>
           </Pressable>
 
           <Pressable
@@ -236,6 +259,20 @@ const styles = StyleSheet.create({
   },
 
   actions: { gap: 12 },
+  shareBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 10,
+    backgroundColor: "#2980B9",
+    borderRadius: 16,
+    paddingVertical: 16,
+  },
+  shareBtnText: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontFamily: "Inter_700Bold",
+  },
   primaryBtn: {
     flexDirection: "row",
     alignItems: "center",

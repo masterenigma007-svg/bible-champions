@@ -1,5 +1,6 @@
 import { Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
+import * as SMS from "expo-sms";
 import React, { useEffect } from "react";
 import {
   Platform,
@@ -13,13 +14,15 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import colors from "@/constants/colors";
 import { useBattle } from "@/context/BattleContext";
 import ScreenBackground from "@/components/ScreenBackground";
+import { useGame } from "@/context/GameContext";
 
 export default function BattleResultsScreen() {
   const insets = useSafeAreaInsets();
   const c = colors.light;
   const topPad = Platform.OS === "web" ? 67 : insets.top + 20;
   const botPad = Platform.OS === "web" ? 34 : insets.bottom + 20;
-  const { state, reset } = useBattleSocket();
+  const { state, reset } = useBattle();
+  const { profile } = useGame();
 
   const myScore = state.myScore;
   const opponentScore = state.opponentScore;
@@ -45,6 +48,22 @@ export default function BattleResultsScreen() {
   const handleHome = () => {
     reset();
     router.replace("/(tabs)/");
+  };
+
+  const handleShare = async () => {
+    const isAvailable = await SMS.isAvailableAsync();
+    if (!isAvailable) return;
+    const name = profile.name.trim() || myName;
+    const resultLine =
+      winner === "me"
+        ? `${name} won a Bible Champions battle! 🏆`
+        : winner === "tie"
+        ? `${name} tied in a Bible Champions battle!`
+        : `${name} played a Bible Champions battle!`;
+    const msg =
+      `${resultLine} ✝️ Score: ${myScore.toLocaleString()} vs ${opponentName}'s ${opponentScore.toLocaleString()}. ` +
+      `${state.myCorrect}/${state.questions.length} correct. Think you can beat that? Play Bible Champions!`;
+    await SMS.sendSMSAsync([], msg);
   };
 
   return (
@@ -147,6 +166,13 @@ export default function BattleResultsScreen() {
           >
             <Feather name="refresh-cw" size={16} color={c.primaryForeground} />
             <Text style={styles.primaryBtnText}>Play Again</Text>
+          </Pressable>
+          <Pressable
+            style={({ pressed }) => [styles.shareBtn, pressed && { opacity: 0.85 }]}
+            onPress={handleShare}
+          >
+            <Feather name="message-circle" size={16} color={c.primaryForeground} />
+            <Text style={styles.shareBtnText}>Share via Text</Text>
           </Pressable>
           <Pressable
             style={({ pressed }) => [styles.secondaryBtn, pressed && { opacity: 0.8 }]}
@@ -269,6 +295,20 @@ const styles = StyleSheet.create({
   },
 
   actions: { gap: 12 },
+  shareBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 10,
+    backgroundColor: "#2980B9",
+    borderRadius: 16,
+    paddingVertical: 16,
+  },
+  shareBtnText: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontFamily: "Inter_700Bold",
+  },
   primaryBtn: {
     flexDirection: "row",
     alignItems: "center",

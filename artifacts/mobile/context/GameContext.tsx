@@ -29,6 +29,11 @@ export interface PlayerStats {
   lastPlayedDate: string | null;
 }
 
+export interface PlayerProfile {
+  name: string;
+  email: string;
+}
+
 const DEFAULT_STATS: PlayerStats = {
   totalScore: 0,
   gamesPlayed: 0,
@@ -42,6 +47,8 @@ const DEFAULT_STATS: PlayerStats = {
   lastPlayedDate: null,
 };
 
+const DEFAULT_PROFILE: PlayerProfile = { name: "", email: "" };
+
 const ACHIEVEMENTS: Achievement[] = [
   { id: "first_game", title: "First Steps", description: "Complete your first quiz", icon: "star" },
   { id: "perfect_10", title: "Perfect Score", description: "Score 10/10 in a quiz", icon: "award" },
@@ -54,6 +61,7 @@ const ACHIEVEMENTS: Achievement[] = [
 
 interface GameContextType {
   stats: PlayerStats;
+  profile: PlayerProfile;
   updateStatsAfterGame: (
     correct: number,
     total: number,
@@ -61,6 +69,7 @@ interface GameContextType {
     category: Category
   ) => Promise<void>;
   resetStats: () => Promise<void>;
+  setProfile: (name: string, email: string) => Promise<void>;
   isLoading: boolean;
 }
 
@@ -68,18 +77,21 @@ const GameContext = createContext<GameContextType | null>(null);
 
 export function GameProvider({ children }: { children: React.ReactNode }) {
   const [stats, setStats] = useState<PlayerStats>(DEFAULT_STATS);
+  const [profile, setProfileState] = useState<PlayerProfile>(DEFAULT_PROFILE);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    loadStats();
+    loadAll();
   }, []);
 
-  const loadStats = async () => {
+  const loadAll = async () => {
     try {
-      const stored = await AsyncStorage.getItem("bible_champions_stats");
-      if (stored) {
-        setStats(JSON.parse(stored));
-      }
+      const [storedStats, storedProfile] = await Promise.all([
+        AsyncStorage.getItem("bible_champions_stats"),
+        AsyncStorage.getItem("bible_champions_profile"),
+      ]);
+      if (storedStats) setStats(JSON.parse(storedStats));
+      if (storedProfile) setProfileState(JSON.parse(storedProfile));
     } catch {
       // ignore
     } finally {
@@ -90,6 +102,16 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   const saveStats = async (newStats: PlayerStats) => {
     try {
       await AsyncStorage.setItem("bible_champions_stats", JSON.stringify(newStats));
+    } catch {
+      // ignore
+    }
+  };
+
+  const setProfile = async (name: string, email: string) => {
+    const p: PlayerProfile = { name: name.trim(), email: email.trim() };
+    setProfileState(p);
+    try {
+      await AsyncStorage.setItem("bible_champions_profile", JSON.stringify(p));
     } catch {
       // ignore
     }
@@ -170,7 +192,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <GameContext.Provider value={{ stats, updateStatsAfterGame, resetStats, isLoading }}>
+    <GameContext.Provider value={{ stats, profile, updateStatsAfterGame, resetStats, setProfile, isLoading }}>
       {children}
     </GameContext.Provider>
   );

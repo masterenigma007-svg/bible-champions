@@ -97,17 +97,17 @@ const styles = StyleSheet.create({
   },
   crossVertical: {
     position: "absolute",
-    width: 70,
+    width: 80,
     height: height * 0.75,
-    backgroundColor: "rgba(255,255,255,0.18)",
-    borderRadius: 35,
+    backgroundColor: "rgba(255,255,255,0.42)",
+    borderRadius: 40,
   },
   crossHorizontal: {
     position: "absolute",
     width: width * 0.72,
-    height: 70,
-    backgroundColor: "rgba(255,255,255,0.18)",
-    borderRadius: 35,
+    height: 80,
+    backgroundColor: "rgba(255,255,255,0.42)",
+    borderRadius: 40,
     top: "30%",
   },
 

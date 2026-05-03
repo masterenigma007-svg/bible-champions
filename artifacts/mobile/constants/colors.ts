@@ -1,44 +1,49 @@
 const colors = {
   light: {
-    text: "#FFFFFF",
-    tint: "#F5A623",
+    text: "#1E3A5F",
+    tint: "#F59E0B",
 
-    background: "#0A0E1A",
-    foreground: "#FFFFFF",
+    background: "#C5E8FF",
+    foreground: "#1E3A5F",
 
-    card: "#141829",
-    cardForeground: "#FFFFFF",
-    cardElevated: "#1A2038",
+    card: "rgba(255,255,255,0.88)",
+    cardForeground: "#1E3A5F",
+    cardElevated: "rgba(255,255,255,0.96)",
 
-    primary: "#F5A623",
-    primaryForeground: "#0A0E1A",
-    primaryDark: "#C97D0A",
+    primary: "#F59E0B",
+    primaryForeground: "#FFFFFF",
+    primaryDark: "#D97706",
 
-    secondary: "#7B5EA7",
+    secondary: "#6366F1",
     secondaryForeground: "#FFFFFF",
 
-    muted: "#1E2640",
-    mutedForeground: "#8892A4",
+    muted: "#E0F2FF",
+    mutedForeground: "#5C7A99",
 
-    accent: "#FFD700",
-    accentForeground: "#0A0E1A",
+    accent: "#F59E0B",
+    accentForeground: "#1E3A5F",
 
-    correct: "#27AE60",
-    correctBg: "#0D3320",
-    wrong: "#E74C3C",
-    wrongBg: "#3C0D0D",
-    neutral: "#2A3050",
+    correct: "#16A34A",
+    correctBg: "#DCFCE7",
+    wrong: "#DC2626",
+    wrongBg: "#FEE2E2",
+    neutral: "#E0EFFF",
 
-    destructive: "#E74C3C",
+    destructive: "#DC2626",
     destructiveForeground: "#FFFFFF",
 
-    border: "#1E2640",
-    input: "#1E2640",
+    border: "#BFD9F0",
+    input: "#E0F2FF",
 
-    gold: "#F5A623",
-    goldLight: "#FFD700",
-    navy: "#0A0E1A",
-    purple: "#7B5EA7",
+    gold: "#F59E0B",
+    goldLight: "#FCD34D",
+    navy: "#1E3A5F",
+    purple: "#6366F1",
+
+    sky: "#C5E8FF",
+    skyLight: "#E8F6FF",
+    cloud: "rgba(255,255,255,0.75)",
+    cross: "rgba(255,255,255,0.12)",
   },
   radius: 16,
 };

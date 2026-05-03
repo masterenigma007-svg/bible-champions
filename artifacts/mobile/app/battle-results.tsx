@@ -12,6 +12,7 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import colors from "@/constants/colors";
 import { useBattle } from "@/context/BattleContext";
+import ScreenBackground from "@/components/ScreenBackground";
 
 export default function BattleResultsScreen() {
   const insets = useSafeAreaInsets();
@@ -48,6 +49,7 @@ export default function BattleResultsScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: c.background }]}>
+      <ScreenBackground />
       <ScrollView
         contentContainerStyle={[styles.content, { paddingTop: topPad, paddingBottom: botPad }]}
         showsVerticalScrollIndicator={false}

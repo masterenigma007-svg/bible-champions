@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import TimerBar from "@/components/TimerBar";
+import ScreenBackground from "@/components/ScreenBackground";
 import colors from "@/constants/colors";
 import { useBattle } from "@/context/BattleContext";
 
@@ -115,6 +116,7 @@ export default function BattleQuizScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: c.background }]}>
+      <ScreenBackground />
       {/* Header: Live Scores */}
       <View style={[styles.header, { paddingTop: topPad }]}>
         <View style={styles.scoreBlock}>

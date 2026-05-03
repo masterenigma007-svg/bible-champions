@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import colors from "@/constants/colors";
+import ScreenBackground from "@/components/ScreenBackground";
 
 export default function ResultsScreen() {
   const params = useLocalSearchParams<{
@@ -42,6 +43,7 @@ export default function ResultsScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: c.background }]}>
+      <ScreenBackground />
       <ScrollView
         contentContainerStyle={[
           styles.content,

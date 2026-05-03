@@ -14,6 +14,7 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import colors from "@/constants/colors";
 import { useBattle } from "@/context/BattleContext";
+import ScreenBackground from "@/components/ScreenBackground";
 
 export default function BattleWaitingScreen() {
   const { roomCode } = useLocalSearchParams<{ roomCode: string }>();
@@ -66,6 +67,7 @@ export default function BattleWaitingScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: c.background }]}>
+      <ScreenBackground />
       <View style={[styles.content, { paddingTop: topPad, paddingBottom: botPad }]}>
         {/* Back */}
         <Pressable onPress={handleLeave} style={styles.backBtn}>

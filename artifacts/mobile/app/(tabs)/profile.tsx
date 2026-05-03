@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import StatCard from "@/components/StatCard";
+import ScreenBackground from "@/components/ScreenBackground";
 import colors from "@/constants/colors";
 import { CATEGORIES } from "@/constants/questions";
 import { useGame } from "@/context/GameContext";
@@ -42,11 +43,13 @@ export default function ProfileScreen() {
   };
 
   return (
-    <ScrollView
-      style={[styles.container, { backgroundColor: c.background }]}
-      contentContainerStyle={[styles.content, { paddingTop: topPad }]}
-      showsVerticalScrollIndicator={false}
-    >
+    <View style={{ flex: 1, backgroundColor: c.background }}>
+      <ScreenBackground />
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={[styles.content, { paddingTop: topPad }]}
+        showsVerticalScrollIndicator={false}
+      >
       {/* Profile Header */}
       <View style={styles.profileCard}>
         <View style={styles.avatar}>
@@ -153,6 +156,7 @@ export default function ProfileScreen() {
 
       <View style={{ height: Platform.OS === "web" ? 100 : 80 }} />
     </ScrollView>
+    </View>
   );
 }
 

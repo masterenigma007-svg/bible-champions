@@ -14,6 +14,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import colors from "@/constants/colors";
 import { useGame } from "@/context/GameContext";
 import StatCard from "@/components/StatCard";
+import ScreenBackground from "@/components/ScreenBackground";
 
 export default function HomeScreen() {
   const c = colors.light;
@@ -36,6 +37,7 @@ export default function HomeScreen() {
       contentContainerStyle={[styles.content, { paddingTop: topPad }]}
       showsVerticalScrollIndicator={false}
     >
+      <ScreenBackground />
       {/* Header */}
       <View style={styles.header}>
         <View>

@@ -17,6 +17,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import colors from "@/constants/colors";
 import { CATEGORIES, Category } from "@/constants/questions";
 import { useBattle } from "@/context/BattleContext";
+import ScreenBackground from "@/components/ScreenBackground";
 
 const DIFFICULTIES = ["easy", "medium", "hard"] as const;
 
@@ -88,6 +89,7 @@ export default function BattleScreen() {
       style={[styles.container, { backgroundColor: c.background }]}
       behavior={Platform.OS === "ios" ? "padding" : undefined}
     >
+      <ScreenBackground />
       <ScrollView
         contentContainerStyle={[styles.content, { paddingTop: topPad }]}
         showsVerticalScrollIndicator={false}

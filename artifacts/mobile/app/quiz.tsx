@@ -12,6 +12,7 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import QuestionCard from "@/components/QuestionCard";
 import TimerBar from "@/components/TimerBar";
+import ScreenBackground from "@/components/ScreenBackground";
 import colors from "@/constants/colors";
 import {
   Category,
@@ -157,6 +158,7 @@ export default function QuizScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: c.background }]}>
+      <ScreenBackground />
       {/* Header */}
       <View style={[styles.header, { paddingTop: topPad }]}>
         <Pressable

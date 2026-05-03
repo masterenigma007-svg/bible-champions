@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import CategoryCard from "@/components/CategoryCard";
+import ScreenBackground from "@/components/ScreenBackground";
 import colors from "@/constants/colors";
 import { CATEGORIES, Category, Difficulty } from "@/constants/questions";
 
@@ -45,6 +46,7 @@ export default function PlayScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: c.background }]}>
+      <ScreenBackground />
       <ScrollView
         contentContainerStyle={[styles.content, { paddingTop: topPad }]}
         showsVerticalScrollIndicator={false}

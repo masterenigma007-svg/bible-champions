@@ -1,7 +1,9 @@
 import { Feather } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
 import React, { useState } from "react";
 import {
   Alert,
+  Image,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -27,6 +29,23 @@ export default function ProfileScreen() {
   const [editing, setEditing] = useState(false);
   const [nameInput, setNameInput] = useState(profile.name);
   const [emailInput, setEmailInput] = useState(profile.email);
+
+  const handlePickPhoto = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== "granted") {
+      Alert.alert("Permission needed", "Please allow access to your photo library to set a profile photo.");
+      return;
+    }
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 0.7,
+    });
+    if (!result.canceled && result.assets[0]) {
+      await setProfile(profile.name, profile.email, result.assets[0].uri);
+    }
+  };
 
   const accuracy =
     stats.totalAnswers > 0
@@ -75,9 +94,18 @@ export default function ProfileScreen() {
       >
         {/* Profile Header */}
         <View style={styles.profileCard}>
-          <View style={styles.avatar}>
-            <Feather name="user" size={32} color={c.primary} />
-          </View>
+          <Pressable onPress={handlePickPhoto} style={styles.avatarWrapper}>
+            {profile.photoUri ? (
+              <Image source={{ uri: profile.photoUri }} style={styles.avatarPhoto} />
+            ) : (
+              <View style={styles.avatar}>
+                <Feather name="user" size={32} color={c.primary} />
+              </View>
+            )}
+            <View style={styles.cameraBadge}>
+              <Feather name="camera" size={12} color="#fff" />
+            </View>
+          </Pressable>
           <Text style={styles.profileName}>{displayName}</Text>
           {profile.email ? (
             <Text style={styles.profileEmail}>{profile.email}</Text>
@@ -256,6 +284,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: c.border,
   },
+  avatarWrapper: {
+    position: "relative",
+    marginBottom: 12,
+  },
   avatar: {
     width: 80,
     height: 80,
@@ -263,9 +295,28 @@ const styles = StyleSheet.create({
     backgroundColor: c.primary + "22",
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 12,
     borderWidth: 2,
     borderColor: c.primary + "44",
+  },
+  avatarPhoto: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    borderWidth: 2,
+    borderColor: c.primary + "66",
+  },
+  cameraBadge: {
+    position: "absolute",
+    bottom: 0,
+    right: 0,
+    width: 26,
+    height: 26,
+    borderRadius: 13,
+    backgroundColor: c.primary,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 2,
+    borderColor: "#fff",
   },
   profileName: {
     color: c.foreground,

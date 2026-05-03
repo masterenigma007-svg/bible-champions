@@ -10,6 +10,7 @@ import {
   Text,
   View,
 } from "react-native";
+
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import colors from "@/constants/colors";
 import { useGame } from "@/context/GameContext";
@@ -40,9 +41,18 @@ export default function HomeScreen() {
       <ScreenBackground />
       {/* Header */}
       <View style={styles.header}>
-        <View>
-          <Text style={styles.greeting}>Welcome back,</Text>
-          <Text style={styles.appName}>{profile.name.trim() || "Bible Champion"}</Text>
+        <View style={styles.headerLeft}>
+          {profile.photoUri ? (
+            <Image source={{ uri: profile.photoUri }} style={styles.headerAvatar} />
+          ) : (
+            <View style={styles.headerAvatarPlaceholder}>
+              <Feather name="user" size={18} color={c.primary} />
+            </View>
+          )}
+          <View>
+            <Text style={styles.greeting}>Welcome back,</Text>
+            <Text style={styles.appName}>{profile.name.trim() || "Bible Champion"}</Text>
+          </View>
         </View>
         <View style={styles.streakBadge}>
           <Feather name="zap" size={14} color={c.primary} />
@@ -141,6 +151,28 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 20,
+  },
+  headerLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+  headerAvatar: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    borderWidth: 2,
+    borderColor: c.primary + "66",
+  },
+  headerAvatarPlaceholder: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: c.primary + "22",
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 2,
+    borderColor: c.primary + "44",
   },
   greeting: {
     color: c.mutedForeground,

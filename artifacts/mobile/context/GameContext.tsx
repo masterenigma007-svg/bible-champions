@@ -32,6 +32,7 @@ export interface PlayerStats {
 export interface PlayerProfile {
   name: string;
   email: string;
+  photoUri: string;
 }
 
 const DEFAULT_STATS: PlayerStats = {
@@ -47,7 +48,7 @@ const DEFAULT_STATS: PlayerStats = {
   lastPlayedDate: null,
 };
 
-const DEFAULT_PROFILE: PlayerProfile = { name: "", email: "" };
+const DEFAULT_PROFILE: PlayerProfile = { name: "", email: "", photoUri: "" };
 
 const ACHIEVEMENTS: Achievement[] = [
   { id: "first_game", title: "First Steps", description: "Complete your first quiz", icon: "star" },
@@ -69,7 +70,7 @@ interface GameContextType {
     category: Category
   ) => Promise<void>;
   resetStats: () => Promise<void>;
-  setProfile: (name: string, email: string) => Promise<void>;
+  setProfile: (name: string, email: string, photoUri?: string) => Promise<void>;
   isLoading: boolean;
 }
 
@@ -107,8 +108,12 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const setProfile = async (name: string, email: string) => {
-    const p: PlayerProfile = { name: name.trim(), email: email.trim() };
+  const setProfile = async (name: string, email: string, photoUri?: string) => {
+    const p: PlayerProfile = {
+      name: name.trim(),
+      email: email.trim(),
+      photoUri: photoUri !== undefined ? photoUri : profile.photoUri,
+    };
     setProfileState(p);
     try {
       await AsyncStorage.setItem("bible_champions_profile", JSON.stringify(p));
@@ -193,6 +198,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <GameContext.Provider value={{ stats, profile, updateStatsAfterGame, resetStats, setProfile, isLoading }}>
+
       {children}
     </GameContext.Provider>
   );

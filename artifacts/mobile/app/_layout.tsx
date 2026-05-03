@@ -15,6 +15,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { GameProvider } from "@/context/GameContext";
+import { BattleProvider } from "@/context/BattleContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -26,6 +27,9 @@ function RootLayoutNav() {
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen name="quiz" options={{ headerShown: false, presentation: "fullScreenModal" }} />
       <Stack.Screen name="results" options={{ headerShown: false, presentation: "fullScreenModal" }} />
+      <Stack.Screen name="battle-waiting" options={{ headerShown: false, presentation: "fullScreenModal" }} />
+      <Stack.Screen name="battle-quiz" options={{ headerShown: false, presentation: "fullScreenModal" }} />
+      <Stack.Screen name="battle-results" options={{ headerShown: false, presentation: "fullScreenModal" }} />
     </Stack>
   );
 }
@@ -51,11 +55,13 @@ export default function RootLayout() {
       <ErrorBoundary>
         <QueryClientProvider client={queryClient}>
           <GameProvider>
-            <GestureHandlerRootView>
-              <KeyboardProvider>
-                <RootLayoutNav />
-              </KeyboardProvider>
-            </GestureHandlerRootView>
+            <BattleProvider>
+              <GestureHandlerRootView>
+                <KeyboardProvider>
+                  <RootLayoutNav />
+                </KeyboardProvider>
+              </GestureHandlerRootView>
+            </BattleProvider>
           </GameProvider>
         </QueryClientProvider>
       </ErrorBoundary>

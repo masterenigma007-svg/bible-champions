@@ -25,7 +25,7 @@ export default function BattleQuizScreen() {
   const c = colors.light;
   const topPad = Platform.OS === "web" ? 67 : insets.top + 12;
   const botPad = Platform.OS === "web" ? 34 : insets.bottom + 16;
-  const { state, submitAnswer, leaveRoom } = useBattleSocket();
+  const { state, submitAnswer, leaveRoom } = useBattle();
 
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [timerKey, setTimerKey] = useState(0);
@@ -63,7 +63,7 @@ export default function BattleQuizScreen() {
     setTimerRunning(false);
     setSelectedIndex(index);
     submitAnswer(state.currentQuestion, index, timeLeftRef.current);
-    if (index === currentQ?.correctIndex) {
+    if (index === state.answerResult?.correctIndex) {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     } else {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);

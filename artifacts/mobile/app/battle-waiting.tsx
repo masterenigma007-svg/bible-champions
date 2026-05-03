@@ -23,7 +23,7 @@ export default function BattleWaitingScreen() {
   const topPad = Platform.OS === "web" ? 67 : insets.top + 20;
   const botPad = Platform.OS === "web" ? 34 : insets.bottom + 20;
   const [copied, setCopied] = useState(false);
-  const { state, leaveRoom } = useBattleSocket();
+  const { state, leaveRoom } = useBattle();
 
   useEffect(() => {
     if (state.status === "playing") {

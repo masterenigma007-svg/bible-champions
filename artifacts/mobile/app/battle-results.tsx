@@ -47,7 +47,7 @@ export default function BattleResultsScreen() {
 
   const handleHome = () => {
     reset();
-    router.replace("/(tabs)/");
+    router.replace("/(tabs)" as any);
   };
 
   const handleShare = async () => {

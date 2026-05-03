@@ -138,7 +138,7 @@ export default function ResultsScreen() {
 
           <Pressable
             style={({ pressed }) => [styles.secondaryBtn, pressed && { opacity: 0.8 }]}
-            onPress={() => router.replace("/(tabs)/")}
+            onPress={() => router.replace("/(tabs)" as any)}
           >
             <Feather name="home" size={16} color={c.foreground} />
             <Text style={styles.secondaryBtnText}>Home</Text>

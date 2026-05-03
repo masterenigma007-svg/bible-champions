@@ -33,7 +33,7 @@ export default function BattleScreen() {
   const [difficulty, setDifficulty] = useState<string>("easy");
   const [loading, setLoading] = useState(false);
 
-  const { state, createRoom, joinRoom, reset } = useBattleSocket();
+  const { state, createRoom, joinRoom, reset } = useBattle();
 
   // Navigate when state changes
   useEffect(() => {

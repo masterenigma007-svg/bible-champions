@@ -55,8 +55,17 @@ React Native / Expo mobile Bible trivia app with single-player quiz mode and rea
 - `components/ScreenBackground.tsx` — absolute-fill layer with fluffy white clouds + large semi-transparent white cross
 - Added to all 9 screens: index, play, profile, battle, quiz, results, battle-waiting, battle-quiz, battle-results
 
+### Bible Crossword (added May 8, 2026)
+- New stack screen: `app/crossword.tsx` (registered in `app/_layout.tsx` as fullScreenModal)
+- Entry point: purple "Bible Crossword" card on Play tab (`app/(tabs)/play.tsx`)
+- 15 Christian words + clues in `constants/crosswordWords.ts`
+- Generator: `lib/crosswordGenerator.ts` — seeded RNG, intersection-based placement, 12 variations via `variation` param
+- Difficulty slider (custom, PanResponder) maps 0–100 → 6–15 words
+- Features: tap-to-focus cells, auto-advance, direction toggle, Reveal letter, Check puzzle, New puzzle
+
 ### Checkpoint
-- Last saved: commit `cfaebcc9` — "Update app to a light blue sky theme with clouds"
+- Last saved: commit `ad9187ff` — "Add a Bible crossword puzzle game with a generator and difficulty slider"
+- Prior: `cfaebcc9` — "Update app to a light blue sky theme with clouds"
 
 ### Conversation Notes (session — May 3, 2026)
 - Completed full light blue sky theme migration (dark navy → sky blue)

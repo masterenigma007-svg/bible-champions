@@ -30,6 +30,7 @@ function RootLayoutNav() {
       <Stack.Screen name="battle-waiting" options={{ headerShown: false, presentation: "fullScreenModal" }} />
       <Stack.Screen name="battle-quiz" options={{ headerShown: false, presentation: "fullScreenModal" }} />
       <Stack.Screen name="battle-results" options={{ headerShown: false, presentation: "fullScreenModal" }} />
+      <Stack.Screen name="crossword" options={{ headerShown: false, presentation: "fullScreenModal" }} />
     </Stack>
   );
 }

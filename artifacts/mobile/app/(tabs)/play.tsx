@@ -71,6 +71,21 @@ export default function PlayScreen() {
           <Feather name="arrow-right" size={18} color={c.mutedForeground} />
         </Pressable>
 
+        {/* Bible Crossword */}
+        <Pressable
+          style={({ pressed }) => [styles.quickPlay, { borderColor: "#6366F144" }, pressed && { opacity: 0.85 }]}
+          onPress={() => router.push("/crossword")}
+        >
+          <View style={[styles.quickPlayIcon, { backgroundColor: "#6366F122" }]}>
+            <Feather name="grid" size={20} color="#6366F1" />
+          </View>
+          <View style={styles.quickPlayText}>
+            <Text style={styles.quickPlayTitle}>Bible Crossword</Text>
+            <Text style={styles.quickPlayDesc}>Solve a fresh puzzle with adjustable difficulty</Text>
+          </View>
+          <Feather name="arrow-right" size={18} color={c.mutedForeground} />
+        </Pressable>
+
         <Text style={styles.sectionLabel}>BY CATEGORY</Text>
 
         {CATEGORIES.map((cat) => (
